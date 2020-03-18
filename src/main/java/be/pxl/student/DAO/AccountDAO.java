@@ -1,19 +1,29 @@
-package be.pxl.student.entity;
+package be.pxl.student.DAO;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "account")
-public class Account {
+public class AccountDAO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String IBAN;
     private String name;
     @OneToMany(mappedBy = "account")
-    private List<Payment> payments;
+    private List<PaymentDAO> payments = new ArrayList<>();
+
+    public AccountDAO() {
+    }
+
+    public AccountDAO(String IBAN, String name){
+        this.IBAN = IBAN;
+        this.name = name;
+    }
 
     public String getIBAN() {
         return IBAN;
@@ -31,19 +41,19 @@ public class Account {
         this.name = name;
     }
 
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
-    }
-
     @Override
     public String toString() {
         return "Account{" +
                 "IBAN='" + IBAN + '\'' +
                 ", name='" + name + '\'' +
-                ", payments=[" + payments.stream().map(Payment::toString).collect(Collectors.joining(",")) + "]}";
+                ", outgoing payments=[" + payments.stream().map(PaymentDAO::toString).collect(Collectors.joining(",")) + "]}";
+    }
+
+    public List<PaymentDAO> getPayments() {
+        return payments;
+    }
+
+    public void addPayment(PaymentDAO payment) {
+        payments.add(payment);
     }
 }

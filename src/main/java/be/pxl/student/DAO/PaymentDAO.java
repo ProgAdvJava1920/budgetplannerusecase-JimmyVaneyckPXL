@@ -1,25 +1,37 @@
-package be.pxl.student.entity;
+package be.pxl.student.DAO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "payment")
-public class Payment {
+public class PaymentDAO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     private LocalDateTime date;
-    private float amount;
+    private double amount;
     private String currency;
     private String detail;
 
-    public Payment(LocalDateTime date, float amount, String currency, String detail) {
+    @ManyToOne
+    private AccountDAO account;
+    @ManyToOne
+    private AccountDAO counterAccount;
+
+    public PaymentDAO(){
+    }
+
+    public PaymentDAO(LocalDateTime date, double amount, String currency, String detail) {
         this.date = date;
         this.amount = amount;
         this.currency = currency;
         this.detail = detail;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public LocalDateTime getDate() {
@@ -30,11 +42,11 @@ public class Payment {
         this.date = date;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -62,5 +74,21 @@ public class Payment {
                 ", currency='" + currency + '\'' +
                 ", detail='" + detail + '\'' +
                 '}';
+    }
+
+    public AccountDAO getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountDAO account) {
+        this.account = account;
+    }
+
+    public AccountDAO getCounterAccount() {
+        return counterAccount;
+    }
+
+    public void setCounterAccount(AccountDAO counterAccount) {
+        this.counterAccount = counterAccount;
     }
 }

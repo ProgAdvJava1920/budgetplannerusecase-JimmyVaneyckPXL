@@ -17,19 +17,23 @@ public class AccountMapper {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
     private static List<Payment> payments;
 
-    public static Account mapToAccount(String line) {
+    public static Account mapToAccount(String line) throws InvalidPaymentException {
 
         Account account = new Account();
 
-        try {
-            payments = new ArrayList<>();
-            String[] parameters = line.split(",");
-            account.setName(parameters[0]);
-            account.setIBAN(parameters[1]);
-            addPayment(line);
-            account.setPayments(payments);
-        } catch (Exception e) {
-            LOGGER.error("This is not a correct line.");
+        if (line.split(",").length != 7) {
+            throw new InvalidPaymentException("Invalid line!");
+        } else {
+            try {
+                payments = new ArrayList<>();
+                String[] parameters = line.split(",");
+                account.setName(parameters[0]);
+                account.setIBAN(parameters[1]);
+                addPayment(line);
+                account.setPayments(payments);
+            } catch (Exception e) {
+                LOGGER.error("This is not a correct line.");
+            }
         }
 
         return account;
