@@ -9,6 +9,7 @@ import be.pxl.student.entity.Payment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PaymentService {
     private PaymentDaoImpl paymentDao;
@@ -42,5 +43,15 @@ public class PaymentService {
 
         payment = new Payment(LocalDateTime.now(), paymentResource.getAmount(), "Euro", paymentResource.getDetail());
         paymentDao.createPayment(payment, account, counterAccount);
+    }
+
+    public List<Payment> getAllPayments(String accountName) throws Exception {
+        Account account = accountDao.getAccountByName(accountName);
+
+        if (account == null) {
+            throw new Exception("Account bestaat niet!");
+        }
+
+        return paymentDao.getPaymentsByAccountId(account.getId());
     }
 }

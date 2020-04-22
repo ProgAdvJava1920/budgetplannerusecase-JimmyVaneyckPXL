@@ -26,20 +26,21 @@ public class PaymentDaoImpl implements PaymentDao {
         this.password = password;
     }
 
-    public Payment readByAccountId(int accountId) {
+    public List<Payment> getPaymentsByAccountId(int accountId) {
+        List<Payment> payments = new ArrayList<>();
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(SELECT_BY_ACCOUNT_ID)) {
             stmt.setLong(1, accountId);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapPayment(rs);
+            while (rs.next()) {
+                payments.add(mapPayment(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return payments;
     }
 
-    public List<Payment> read() {
+    public List<Payment> getPayments() {
         List<Payment> payments = new ArrayList<>();
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(SELECT)) {
             ResultSet rs = stmt.executeQuery();
