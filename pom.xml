@@ -5,7 +5,7 @@
 	<groupId>be.pxl.student</groupId>
 	<artifactId>BudgetPlanner</artifactId>
 	<version>SNAPSHOT-1.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>BudgetPlanner</name>
 	<url>http://maven.apache.org</url>
@@ -16,6 +16,20 @@
 		<maven.compiler.source>11</maven.compiler.source>
 	</properties>
 
+	<build>
+		<finalName>budgetPlanner</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomee.maven</groupId>
+				<artifactId>tomee-maven-plugin</artifactId>
+				<version>8.0.1</version>
+				<configuration>
+					<tomeeHttpPort>8085</tomeeHttpPort>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
 	<dependencies>
 
 		<dependency>
@@ -68,6 +82,18 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.47</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>7.0.42</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

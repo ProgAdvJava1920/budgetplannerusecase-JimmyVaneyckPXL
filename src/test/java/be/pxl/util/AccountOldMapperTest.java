@@ -6,15 +6,13 @@ import be.pxl.student.util.AccountMapper;
 import be.pxl.student.util.InvalidPaymentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.opentest4j.AssertionFailedError;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AccountMapperTest {
+public class AccountOldMapperTest {
     private String validLine = "Jos,BE69771770897312,BE17795215960626,Thu Feb 13 05:47:35 CET 2020,265.8,EUR,Ut ut necessitatibus itaque ullam.";
     private String inValidLine = "BE69771770897312,BE17795215960626,Thu Feb 13 05:47:35 CET 2020,265.8,EUR";
     private AccountMapper accountMapper = new AccountMapper();
