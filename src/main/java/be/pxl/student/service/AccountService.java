@@ -2,10 +2,14 @@ package be.pxl.student.service;
 
 import be.pxl.student.REST.resource.AccountResource;
 import be.pxl.student.dao.AccountDAO;
+import be.pxl.student.dao.JPA.AccountDaoJPA;
 import be.pxl.student.dao.impl.AccountDaoImpl;
 import be.pxl.student.entity.Account;
 import be.pxl.student.entity.Payment;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class AccountService {
@@ -49,5 +53,9 @@ public class AccountService {
         } else {
             return account;
         }
+    }
+
+    public Account getAccount() {
+        return new Account("bedry", "naam");
     }
 }

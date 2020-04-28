@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQuery(name="account.getAll", query = "SELECT a FROM Account as a")
 @Table(name = "account")
 public class Account {
     @Id
