@@ -66,10 +66,10 @@ public class LabelDaoImpl implements LabelDao {
         return false;
     }
 
-    public boolean findNameInLabels(LabelResource labelResource) {
+    public boolean findNameInLabels(Label label) {
         List<Label> labels = getLabels();
-        for (Label label: labels){
-            if (label.getName().equals(labelResource.getName())) {
+        for (Label labelInList: labels){
+            if (labelInList.getName().equals(label.getName())) {
                 return true;
             }
         }

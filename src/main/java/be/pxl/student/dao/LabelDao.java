@@ -9,7 +9,7 @@ public interface LabelDao {
     List<Label> getLabels();
     Label createLabel(Label label);
     boolean deleteLabel(int id);
-    boolean findNameInLabels(LabelResource labelResource);
+    boolean findNameInLabels(Label label);
     Label getLabelById(int id);
 
 }

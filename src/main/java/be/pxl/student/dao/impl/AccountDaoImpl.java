@@ -57,7 +57,7 @@ public class AccountDaoImpl implements AccountDAO {
         return null;
     }
 
-    public boolean updateAccount(AccountResource account, int id) {
+    public boolean updateAccount(Account account, int id) {
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(UPDATE)) {
             stmt.setString(1, account.getName());
             stmt.setString(2, account.getIBAN());
@@ -118,20 +118,20 @@ public class AccountDaoImpl implements AccountDAO {
         return null;
     }
 
-    public boolean findIbanOrNameInAccounts(AccountResource accountResource) {
+    public boolean findIbanOrNameInAccounts(Account account) {
         List<Account> accounts = getAccounts();
-        for (Account account: accounts){
-            if (account.getIBAN().equals(accountResource.getIBAN()) || account.getName().equals(accountResource.getName())) {
+        for (Account accountInList: accounts){
+            if (accountInList.getIBAN().equals(account.getIBAN()) || accountInList.getName().equals(account.getName())) {
                 return true;
             }
         }
         return false;
     }
 
-    public int ibanInAccountButEmptyName(AccountResource accountResource) {
+    public int ibanInAccountButEmptyName(Account account) {
         List<Account> accounts = getAccounts();
-        for (Account account: accounts) {
-            if (account.getIBAN().equals(accountResource.getIBAN()) && account.getName().equals("")) {
+        for (Account accountInList: accounts) {
+            if (accountInList.getIBAN().equals(account.getIBAN()) && accountInList.getName().equals("")) {
                 return account.getId();
             }
         }

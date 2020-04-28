@@ -8,8 +8,9 @@ import java.util.List;
 public interface AccountDAO {
     List<Account> getAccounts();
     Account createAccount(Account account);
-    boolean updateAccount(AccountResource account, int id);
+    boolean updateAccount(Account account, int id);
     boolean deleteAccount(int id);
     Account getAccountById(int id);
+    Account getAccountByName(String name);
 
 }

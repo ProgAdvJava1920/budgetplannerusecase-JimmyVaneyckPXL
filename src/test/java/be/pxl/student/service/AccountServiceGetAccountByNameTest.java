@@ -1,4 +1,4 @@
-package be.pxl.student;
+package be.pxl.student.service;
 
 import be.pxl.student.REST.resource.LabelResource;
 import be.pxl.student.dao.AccountDAO;
@@ -14,15 +14,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class AccountServiceGetAccountByNameTest {
     private static final long USER_ID = 5l;
 
     @Mock
-    private AccountDaoImpl accountDAO;
+    private AccountDAO accountDAO;
     @InjectMocks
     private AccountService accountService;
     private Account account;
@@ -35,12 +34,15 @@ public class AccountServiceGetAccountByNameTest {
 
     @Test
     public void anExceptionIsThrownWhenNameIsNotFound() throws Exception {
-        assertThrows(Exception.class, () -> accountService.getAccountByName("Wrong name"));
+        account.setName("Jos");
+        assertThrows(Exception.class, () -> accountService.getAccountByName(account.getName()));
     }
 
     @Test
-    public void WhenNameIsFoundItWillReturnTrue() throws Exception {
-        when(accountDAO.getAccountByName("Jimmy")).thenReturn(account);
-        assertEquals(account, accountService.getAccountByName("Jimmy"));
+    public void WhenNameIsFoundItWillReturnAnAccount() throws Exception {
+        when(accountDAO.getAccountByName(account.getName())).thenReturn(account);
+
+        assertEquals(account.getName(), accountService.getAccountByName(account.getName()).getName());
+        assertEquals(account.getIBAN(), accountService.getAccountByName(account.getName()).getIBAN());
     }
 }

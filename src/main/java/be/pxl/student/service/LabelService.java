@@ -21,9 +21,9 @@ public class LabelService {
     }
 
     public void createLabel(LabelResource labelResource) throws Exception {
-        Label label = new Label(labelResource.getName(), labelResource.getDescription());
+        Label label = mapToLabel(labelResource);
 
-        if (labelDao.findNameInLabels(labelResource)) {
+        if (labelDao.findNameInLabels(label)) {
             throw new Exception("Label bestaat al!");
         } else {
             labelDao.createLabel(label);
@@ -36,5 +36,9 @@ public class LabelService {
         } else {
             throw new Exception("Label bestaat niet!");
         }
+    }
+
+    private Label mapToLabel(LabelResource labelResource) {
+        return new Label(labelResource.getName(), labelResource.getDescription());
     }
 }

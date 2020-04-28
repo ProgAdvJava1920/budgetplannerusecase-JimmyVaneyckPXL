@@ -3,14 +3,17 @@ package be.pxl.student.REST;
 import be.pxl.student.REST.resource.AccountResource;
 import be.pxl.student.REST.resource.LabelResource;
 import be.pxl.student.REST.resource.PaymentResource;
+import be.pxl.student.entity.Account;
 import be.pxl.student.entity.Label;
 import be.pxl.student.entity.Payment;
 import be.pxl.student.service.AccountService;
 import be.pxl.student.service.PaymentService;
 
+import javax.enterprise.inject.New;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class AccountsRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountResource accountResource) {
         try {
-            accountService.createAccount(accountResource);
+            accountService.createAccount(mapToAccount(accountResource));
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
         }
@@ -44,15 +47,20 @@ public class AccountsRest {
     }
 
     @GET
-    @Path("{accountName}")
+    //@Path("{accountName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPaymentsByAccountName(@PathParam("accountName") String name) {
-        List<Payment> payments = new ArrayList<>();
+    public Response getAllPaymentsByAccountName(/*@PathParam("accountName") String name*/) {
+        PaymentService paymentService = new PaymentService();
+        List<Payment> payments = null;
         try {
-            payments = paymentService.getAllPayments(name);
+            payments = paymentService.getAllPayments("Jimmy");
         } catch (Exception e) {
             Response.status(Response.Status.BAD_REQUEST).entity(e).build();
         }
         return Response.ok(payments).build();
+    }
+
+    private Account mapToAccount(AccountResource accountResource) {
+        return new Account(accountResource.getIBAN(), accountResource.getName());
     }
 }

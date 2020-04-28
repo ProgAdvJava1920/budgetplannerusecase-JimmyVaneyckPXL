@@ -21,9 +21,9 @@ public class PaymentService {
     }
 
     public void createPayment(PaymentResource paymentResource, String accountName) throws Exception {
-        Payment payment = new Payment();
+        Payment payment;
         Account account = accountDao.getAccountByName(accountName);
-        Account counterAccount;
+        Account counterAccount = new Account();
 
         //check if account exist
         if (account == null) {
@@ -31,14 +31,13 @@ public class PaymentService {
         }
 
         //check if counterIban exist in database
-        AccountResource counterResourceAccount = new AccountResource();
-        counterResourceAccount.setIBAN(paymentResource.getCounterAccount());
-        counterResourceAccount.setName("");
-
-        if (!accountDao.findIbanOrNameInAccounts(counterResourceAccount)) {
-            counterAccount = accountDao.createAccount(new Account(counterResourceAccount.getIBAN(), counterResourceAccount.getName()));
+        counterAccount.setIBAN(paymentResource.getCounterAccount());
+        counterAccount.setName("");
+        if (!accountDao.findIbanOrNameInAccounts(counterAccount)) {
+            int id = accountDao.createAccount(counterAccount).getId();
+            counterAccount.setId(id);
         }  else {
-            counterAccount = accountDao.getAccountByIBAN(counterResourceAccount.getIBAN());
+            counterAccount = accountDao.getAccountByIBAN(counterAccount.getIBAN());
         }
 
         payment = new Payment(LocalDateTime.now(), paymentResource.getAmount(), "Euro", paymentResource.getDetail());
@@ -53,5 +52,9 @@ public class PaymentService {
         }
 
         return paymentDao.getPaymentsByAccountId(account.getId());
+    }
+
+    private Account mapToAccount(AccountResource accountResource) {
+        return new Account(accountResource.getIBAN(), accountResource.getName());
     }
 }
