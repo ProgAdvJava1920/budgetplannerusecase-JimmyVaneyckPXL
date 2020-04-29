@@ -26,7 +26,7 @@ public class AccountDaoImpl implements AccountDAO {
         this.password = password;
     }
 
-    public List<Account> getAccounts() {
+    public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(SELECT)) {
             ResultSet rs = stmt.executeQuery();
@@ -119,7 +119,7 @@ public class AccountDaoImpl implements AccountDAO {
     }
 
     public boolean findIbanOrNameInAccounts(Account account) {
-        List<Account> accounts = getAccounts();
+        List<Account> accounts = getAllAccounts();
         for (Account accountInList: accounts){
             if (accountInList.getIBAN().equals(account.getIBAN()) || accountInList.getName().equals(account.getName())) {
                 return true;
@@ -129,7 +129,7 @@ public class AccountDaoImpl implements AccountDAO {
     }
 
     public int ibanInAccountButEmptyName(Account account) {
-        List<Account> accounts = getAccounts();
+        List<Account> accounts = getAllAccounts();
         for (Account accountInList: accounts) {
             if (accountInList.getIBAN().equals(account.getIBAN()) && accountInList.getName().equals("")) {
                 return account.getId();

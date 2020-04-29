@@ -14,7 +14,7 @@ public class BudgetPlannerDAO {
         AccountDaoImpl accountMapper = new AccountDaoImpl("jdbc:mysql://localhost:3306/musicdb?useSSL=false", "user", "test");
         PaymentDaoImpl paymentMapper = new PaymentDaoImpl("jdbc:mysql://localhost:3306/musicdb?useSSL=false", "user", "test");
 
-        List<Account> accounts = accountMapper.getAccounts();
+        List<Account> accounts = accountMapper.getAllAccounts();
         List<Payment> payments = paymentMapper.getPayments();
 
         for (Payment payment: payments) {

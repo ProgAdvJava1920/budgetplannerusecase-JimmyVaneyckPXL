@@ -34,7 +34,7 @@ public class AccountServiceGetAllAccountsTest {
 
     @Test
     public void WhenThereAreAccountsItWillReturnAllAccounts() throws Exception {
-        when(accountDAO.getAccounts()).thenReturn(accounts);
+        when(accountDAO.getAllAccounts()).thenReturn(accounts);
 
         List<Account> retrievedAccounts = accountService.getAllAccounts();
 

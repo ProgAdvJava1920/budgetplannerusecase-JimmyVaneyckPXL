@@ -13,10 +13,10 @@ import javax.persistence.Persistence;
 import java.util.List;
 
 public class AccountService {
-    private AccountDaoImpl accountDAO;
+    private AccountDaoImpl accountDAO = new AccountDaoImpl("jdbc:mysql://localhost:3306/budgetplanner?useSSL=false", "root", "test");;
 
     public AccountService() {
-        accountDAO = new AccountDaoImpl("jdbc:mysql://localhost:3306/budgetplanner?useSSL=false", "root", "test");
+        //accountDAO = new AccountDaoImpl("jdbc:mysql://localhost:3306/budgetplanner?useSSL=false", "root", "test");
     }
 
     public void createAccount(Account account) throws Exception {
@@ -34,7 +34,7 @@ public class AccountService {
     }
 
     public List<Account> getAllAccounts() throws Exception {
-        return accountDAO.getAccounts();
+        return accountDAO.getAllAccounts();
     }
 
     public Account getAccountByName(String name) throws Exception {

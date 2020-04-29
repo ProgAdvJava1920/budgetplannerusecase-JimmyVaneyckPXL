@@ -6,7 +6,7 @@ import be.pxl.student.entity.Account;
 import java.util.List;
 
 public interface AccountDAO {
-    List<Account> getAccounts();
+    List<Account> getAllAccounts();
     Account createAccount(Account account);
     boolean updateAccount(Account account, int id);
     boolean deleteAccount(int id);
